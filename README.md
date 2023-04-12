@@ -56,7 +56,7 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- Will be updated at the end of the project
+<img src="readme-res/Peek 2023-04-12 19-09.gif" alt="logo" width="auto"  height="auto" />
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -99,7 +99,7 @@ Install this project with:
 To run the project, execute the following command:
 
 ```sh
-  ruby person.rb
+  ruby main.rb
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -122,7 +122,7 @@ To run the project, execute the following command:
 ## 🔭 Future Features <a name="future-features"></a>
 
 
-- [ ] **[Command Line User Interface]**
+- [ ] **[Add methods to track returned books]**
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
