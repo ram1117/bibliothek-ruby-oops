@@ -32,11 +32,11 @@ class App
     print "Has parents' permission [Y/n]: "
     yesorno = gets.chomp
     @people.push Student.new(
-      age: age,
-      classroom: classroom,
-      name: name.capitalize,
-      parent_permission: %w[Y y].include?(yesorno)
-    )
+                   age: age,
+                   classroom: classroom,
+                   name: name.capitalize,
+                   parent_permission: %w[Y y].include?(yesorno),
+                 )
     print "Student added successfully!!! \n"
   end
 
@@ -48,10 +48,10 @@ class App
     print 'Specialization: '
     specialization = gets.chomp
     @people.push Teacher.new(
-      age: age,
-      specialization: specialization.capitalize,
-      name: name.capitalize
-    )
+                   age: age,
+                   specialization: specialization.capitalize,
+                   name: name.capitalize,
+                 )
     print "Teacher added successfully!!!\n"
   end
 
@@ -68,10 +68,10 @@ class App
     if @books.empty? || @people.empty?
       print "Please add some books and people to create a Rental: \n"
     else
-      print "Please select the book to rent: \n"
+      print "Please select a book from the below list using the book's number: \n"
       list_books
       book_option = gets.chomp.to_i
-      print "Please select a person: \n"
+      print "Please select a person from the list below using the person's numer(not ID): \n"
       list_people
       person_option = gets.chomp.to_i
       person = @people[person_option]
@@ -84,7 +84,7 @@ class App
   end
 
   def insert_rental(person, book)
-    print 'Date: '
+    print 'Date [YYYY-MM-DD]: '
     date = gets.chomp
     @rentals.push Rental.new(date, person, book)
     print "Rental created successfully!!\n"
