@@ -4,66 +4,10 @@ require_relative './book'
 require_relative './rental'
 
 class App
-  MAIN_MENU =
-    "\n\nPlease choose an option:
-    1.List all books
-    2.List all people
-    3.Create a person
-    4.Create a book
-    5.Create a rental
-    6.List all rentals for a given Person ID
-    7.Exit\n".freeze
-
   def initialize()
     @books = []
     @people = []
     @rentals = []
-  end
-
-  def mainmenu
-    while MAIN_MENU
-      print MAIN_MENU
-      main_option = gets.chomp
-      break if main_option == '7'
-      selected_option(main_option)
-    end
-  end
-
-  def selected_option(option)
-    case option
-    when '1'
-      list_books
-    when '2'
-      list_people
-    when '3'
-      add_person
-    when '4'
-      add_book
-    when '5'
-      add_rental
-    when '6'
-      list_rental
-    else
-      print "Please enter a valid option: \n\n"
-    end
-  end
-
-  def add_student
-    print 'Name: '
-    name = gets.chomp
-    print 'Age: '
-    age = gets.chomp
-    print 'Classroom: '
-    classroom = gets.chomp
-    print "Has parents' permission [Y/n]: "
-    yesorno = gets.chomp
-    @people.push Student.new(
-                   age: age,
-                   classroom: classroom,
-                   name: name.capitalize,
-                   parent_permission: %w[Y y].include?(yesorno),
-                 )
-    print "Student added successfully!!! \n"
   end
 
   def add_person
@@ -78,6 +22,24 @@ class App
     end
   end
 
+  def add_student
+    print 'Name: '
+    name = gets.chomp
+    print 'Age: '
+    age = gets.chomp
+    print 'Classroom: '
+    classroom = gets.chomp
+    print "Has parents' permission [Y/n]: "
+    yesorno = gets.chomp
+    @people.push Student.new(
+      age: age,
+      classroom: classroom,
+      name: name.capitalize,
+      parent_permission: %w[Y y].include?(yesorno)
+    )
+    print "Student added successfully!!! \n"
+  end
+
   def add_teacher
     print 'Name: '
     name = gets.chomp
@@ -86,10 +48,10 @@ class App
     print 'Specialization: '
     specialization = gets.chomp
     @people.push Teacher.new(
-                   age: age,
-                   specialization: specialization.capitalize,
-                   name: name.capitalize,
-                 )
+      age: age,
+      specialization: specialization.capitalize,
+      name: name.capitalize
+    )
     print "Teacher added successfully!!!\n"
   end
 
@@ -108,19 +70,24 @@ class App
     else
       print "Please select the book to rent: \n"
       list_books
-      book_option = gets.chomp
-      print "Please select a persont: \n"
+      book_option = gets.chomp.to_i
+      print "Please select a person: \n"
       list_people
-      person_option = gets.chomp
-      print 'Date: '
-      date = gets.chomp
-      @rentals.push Rental.new(
-                      date,
-                      @people[person_option.to_i],
-                      @books[book_option.to_i],
-                    )
-      print "Rental created successfully!!\n"
+      person_option = gets.chomp.to_i
+      person = @people[person_option]
+      if person.parent_permission
+        insert_rental(person, @books[book_option])
+      else
+        print "#{[person.class]} - #{person.name} has no Parent's permission to borrow"
+      end
     end
+  end
+
+  def insert_rental(person, book)
+    print 'Date: '
+    date = gets.chomp
+    @rentals.push Rental.new(date, person, book)
+    print "Rental created successfully!!\n"
   end
 
   def list_books
