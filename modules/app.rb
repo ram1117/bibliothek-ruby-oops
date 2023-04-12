@@ -5,15 +5,14 @@ require_relative './rental'
 
 class App
   MAIN_MENU =
-    "\n\nPlease choose and option:
+    "\n\nPlease choose an option:
     1.List all books
     2.List all people
     3.Create a person
     4.Create a book
     5.Create a rental
     6.List all rentals for a given Person ID
-    7.Exit\n"
-  MAIN_OPT_ARR = %w[1 2 3 4 5 6 7]
+    7.Exit\n".freeze
 
   def initialize()
     @books = []
@@ -22,37 +21,30 @@ class App
   end
 
   def mainmenu
-    main_option = ''
-    while main_option
+    while MAIN_MENU
       print MAIN_MENU
       main_option = gets.chomp
-      case main_option
-      when '1'
-        list_books()
-      when '2'
-        list_people()
-      when '3'
-        print 'Do you want to create a [1] Student or [2] Teacher?: '
-        person_option = gets.chomp
-        case person_option
-        when '1'
-          add_student()
-        when '2'
-          add_teacher()
-        else
-          print 'Please enter valid option: [1] or [2]'
-        end
-      when '4'
-        add_book()
-      when '5'
-        add_rental()
-      when '6'
-        list_rental()
-      when '7'
-        break
-      else
-        print "Please enter a valid option: \n\n"
-      end
+      break if main_option == '7'
+      selected_option(main_option)
+    end
+  end
+
+  def selected_option(option)
+    case option
+    when '1'
+      list_books
+    when '2'
+      list_people
+    when '3'
+      add_person
+    when '4'
+      add_book
+    when '5'
+      add_rental
+    when '6'
+      list_rental
+    else
+      print "Please enter a valid option: \n\n"
     end
   end
 
@@ -65,15 +57,27 @@ class App
     classroom = gets.chomp
     print "Has parents' permission [Y/n]: "
     yesorno = gets.chomp
-    parent_permission = %w[Y y].include?(yesorno)
     @people.push Student.new(
                    age: age,
                    classroom: classroom,
                    name: name.capitalize,
-                   parent_permission: parent_permission,
+                   parent_permission: %w[Y y].include?(yesorno),
                  )
     print "Student added successfully!!! \n"
   end
+
+  def add_person
+    print 'Do you want to create a [1] Student or [2] Teacher?: '
+    option = gets.chomp
+    if option == '1'
+      add_student
+    elsif option == '2'
+      add_teacher
+    else
+      print 'Please enter valid option: [1] or [2]'
+    end
+  end
+
   def add_teacher
     print 'Name: '
     name = gets.chomp
@@ -88,6 +92,7 @@ class App
                  )
     print "Teacher added successfully!!!\n"
   end
+
   def add_book
     print 'Title: '
     title = gets.chomp
@@ -98,36 +103,28 @@ class App
   end
 
   def add_rental
-    if @books.length == 0 || @people.length == 0
+    if @books.empty? || @people.empty?
       print "Please add some books and people to create a Rental: \n"
     else
       print "Please select the book to rent: \n"
-      list_books()
+      list_books
       book_option = gets.chomp
-      unless (0..@books.length - 1).include?(book_option.to_i)
-        print "Please select valid book option: \n"
-      else
-        print "Please select a persont: \n"
-        list_people()
-        person_option = gets.chomp
-        unless (0..@people.length - 1).include?(person_option.to_i)
-          print "Please select valid person option: \n"
-        else
-          print 'Date: '
-          date = gets.chomp
-          @rentals.push Rental.new(
-                          date,
-                          @people[person_option.to_i],
-                          @books[book_option.to_i],
-                        )
-          print "Rental created successfully!!\n"
-        end
-      end
+      print "Please select a persont: \n"
+      list_people
+      person_option = gets.chomp
+      print 'Date: '
+      date = gets.chomp
+      @rentals.push Rental.new(
+                      date,
+                      @people[person_option.to_i],
+                      @books[book_option.to_i],
+                    )
+      print "Rental created successfully!!\n"
     end
   end
 
   def list_books
-    if @books.length == 0
+    if @books.empty?
       print "Books list is empty! Please add some books\n"
     else
       @books.each_with_index.map do |book, index|
@@ -137,15 +134,20 @@ class App
   end
 
   def list_people
-    if @people.length == 0
+    if @people.empty?
       print "People list is empty! Please add some people\n"
     else
       @people.each_with_index.map do |person, index|
-        if person.class == Student
-          print "[#{index}] - [#{person.class}] - Id: #{person.id} , Name: #{person.name}, Age: #{person.age}, Class: #{person.classroom}\n"
+        if person.instance_of?(Student)
+          str1 = "[#{index}] - [#{person.class}] - Id: #{person.id} , "
+          str2 =
+            " Name: #{person.name}, Age: #{person.age}, Class: #{person.classroom}\n"
         else
-          print "[#{index}] - [#{person.class}] - Id: #{person.id} , Name: #{person.name}, Age:  #{person.age}, Specialization: #{person.specialization}\n"
+          str1 = "[#{index}] - [#{person.class}] - Id: #{person.id} ,"
+          str2 =
+            "  Name: #{person.name}, Age:  #{person.age}, Specialization: #{person.specialization}\n"
         end
+        print str1 + str2
       end
     end
   end
@@ -154,10 +156,10 @@ class App
     print "Person's ID: "
     person_id = gets.chomp
     selected_person = @people.select { |person| person.id == person_id.to_i }
-    if selected_person.length == 0
+    if selected_person.empty?
       print "No person found with the given ID!!!\n"
     else
-      print 'Rentals:'
+      print "Rentals:\n"
       selected_person.first.rentals.map do |rental|
         print "Date: #{rental.date}, Book: #{rental.book.title}, Author: #{rental.book.author}\n"
       end

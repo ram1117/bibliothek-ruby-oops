@@ -2,7 +2,7 @@
 require_relative './modules/app'
 def main
   app = App.new
-  app.mainmenu()
+  app.mainmenu
 end
 
-main()
+main
