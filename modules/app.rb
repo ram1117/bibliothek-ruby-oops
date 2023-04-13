@@ -2,8 +2,10 @@ require_relative './student'
 require_relative './teacher'
 require_relative './book'
 require_relative './rental'
+require_relative './validator'
 
 class App
+  include Validator
   def initialize()
     @books = []
     @people = []
@@ -24,13 +26,13 @@ class App
 
   def add_student
     print 'Name: '
-    name = gets.chomp
+    name = validate_input_empty('Name: ')
     print 'Age: '
-    age = gets.chomp
+    age = validate_input_int('Age: ')
     print 'Classroom: '
-    classroom = gets.chomp
-    print "Has parents' permission [Y/n]: "
-    yesorno = gets.chomp
+    classroom = validate_input_empty('Classroom: ')
+    print "Has parents' permission [Yy/Nn]: "
+    yesorno = validate_input_boolean("Parents' permission [Yy/Nn]")
     @people.push Student.new(
       age: age,
       classroom: classroom,
@@ -42,11 +44,11 @@ class App
 
   def add_teacher
     print 'Name: '
-    name = gets.chomp
+    name = validate_input_empty('Name: ')
     print 'Age: '
-    age = gets.chomp
+    age = validate_input_int('Age: ')
     print 'Specialization: '
-    specialization = gets.chomp
+    specialization = validate_input_empty('Specialization: ')
     @people.push Teacher.new(
       age: age,
       specialization: specialization.capitalize,
@@ -57,9 +59,9 @@ class App
 
   def add_book
     print 'Title: '
-    title = gets.chomp
+    title = validate_input_empty('Book Title ')
     print 'Author: '
-    author = gets.chomp
+    author = validate_input_empty('Book Author ')
     @books.push Book.new(title.capitalize, author.capitalize)
     print "Book succesfully added to the Library: \n"
   end
@@ -70,10 +72,11 @@ class App
     else
       print "Please select a book from the below list using the book's number: \n"
       list_books
-      book_option = gets.chomp.to_i
+      book_option = validate_input_range('Book Option', 0, @books.length - 1)
       print "Please select a person from the list below using the person's numer(not ID): \n"
       list_people
-      person_option = gets.chomp.to_i
+      person_option =
+        validate_input_range('Person Option', 0, @people.length - 1)
       person = @people[person_option]
       if person.parent_permission
         insert_rental(person, @books[book_option])
@@ -85,7 +88,8 @@ class App
 
   def insert_rental(person, book)
     print 'Date [YYYY-MM-DD]: '
-    date = gets.chomp
+    date = validate_input_date('Date [YYYY-MM-DD]')
+    print date
     @rentals.push Rental.new(date, person, book)
     print "Rental created successfully!!\n"
   end
