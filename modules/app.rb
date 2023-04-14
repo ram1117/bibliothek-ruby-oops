@@ -25,18 +25,20 @@ class App
   def add_student
     print 'Name: '
     name = gets.chomp
+    name = ''
     print 'Age: '
     age = gets.chomp
+    age = ''
     print 'Classroom: '
     classroom = gets.chomp
     print "Has parents' permission [Y/n]: "
     yesorno = gets.chomp
     @people.push Student.new(
-      age: age,
-      classroom: classroom,
-      name: name.capitalize,
-      parent_permission: %w[Y y].include?(yesorno)
-    )
+                   age: age,
+                   classroom: classroom,
+                   name: name.capitalize,
+                   parent_permission: %w[Y y].include?(yesorno),
+                 )
     print "Student added successfully!!! \n"
   end
 
@@ -48,10 +50,10 @@ class App
     print 'Specialization: '
     specialization = gets.chomp
     @people.push Teacher.new(
-      age: age,
-      specialization: specialization.capitalize,
-      name: name.capitalize
-    )
+                   age: age,
+                   specialization: specialization.capitalize,
+                   name: name.capitalize,
+                 )
     print "Teacher added successfully!!!\n"
   end
 
