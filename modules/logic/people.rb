@@ -4,6 +4,7 @@ require_relative '../validator'
 class People
   include Validator
   attr_accessor :people
+
   def initialize
     @people = []
   end
@@ -30,11 +31,11 @@ class People
     print "Has parents' permission [Yy/Nn]: "
     yesorno = validate_input_boolean("Parents' permission [Yy/Nn]")
     @people.push Student.new(
-                   age: age,
-                   classroom: classroom,
-                   name: name.capitalize,
-                   parent_permission: %w[Y y].include?(yesorno),
-                 )
+      age: age,
+      classroom: classroom,
+      name: name.capitalize,
+      parent_permission: %w[Y y].include?(yesorno)
+    )
     print "Student added successfully!!! \n"
   end
 
@@ -46,10 +47,10 @@ class People
     print 'Specialization: '
     specialization = validate_input_empty('Specialization: ')
     @people.push Teacher.new(
-                   age: age,
-                   specialization: specialization.capitalize,
-                   name: name.capitalize,
-                 )
+      age: age,
+      specialization: specialization.capitalize,
+      name: name.capitalize
+    )
     print "Teacher added successfully!!!\n"
   end
 

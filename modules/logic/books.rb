@@ -3,6 +3,7 @@ require_relative '../validator'
 class Books
   include Validator
   attr_accessor :books
+
   def initialize
     @books = []
   end
