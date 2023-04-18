@@ -17,27 +17,7 @@ def main
     main_option = gets.chomp
     break if main_option == '7'
 
-    selected_option(main_option, app)
+    app.eval_option(main_option)
   end
 end
-
-def selected_option(option, app)
-  case option
-  when '1'
-    app.list_books
-  when '2'
-    app.list_people
-  when '3'
-    app.add_person
-  when '4'
-    app.add_book
-  when '5'
-    app.add_rental
-  when '6'
-    app.list_rental
-  else
-    print "Please enter a valid option: \n\n"
-  end
-end
-
 main
