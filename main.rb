@@ -4,7 +4,7 @@ require 'fileutils'
 def main
   main_menu =
     "\nPlease choose an option:\n1.List all books\n2.List all people\n3.Create a person\n4.Create a book\n" \
-      "5.Create a rental\n6.List all rentals for a given Person ID\n7.Exit\n\n"
+    "5.Create a rental\n6.List all rentals for a given Person ID\n7.Exit\n\n"
   app = App.new
   FileUtils.mkdir_p('data')
   while main_menu
