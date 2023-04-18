@@ -7,12 +7,9 @@ class Books
   attr_accessor :books
 
   def initialize
-    @json_processor = ProcessJson.new('books.json')
-    books_data = @json_processor.read_data_from_file
     @books = []
-    books_data.each do |bookdata|
-      @books << Book.new(bookdata['title'], bookdata['author'])
-    end
+    @json_processor = ProcessJson.new('./data/books.json')
+    load_book_from_file
   end
 
   def add_book
@@ -31,6 +28,13 @@ class Books
       @books.each_with_index.map do |book, index|
         print "[#{index}] Title: #{book.title}, Author: #{book.author} \n"
       end
+    end
+  end
+
+  def load_book_from_file
+    books_data = @json_processor.read_data_from_file
+    books_data.each do |bookdata|
+      @books << Book.new(bookdata['title'], bookdata['author'])
     end
   end
 

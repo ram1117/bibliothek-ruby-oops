@@ -1,14 +1,15 @@
 require_relative '../student'
 require_relative '../teacher'
 require_relative '../validator'
-require_relative '../process_json'
+require_relative '../processjson'
 class People
   include Validator
   attr_accessor :people
 
   def initialize
     @people = []
-    @person_file = ProccessJsonFile.new('person.json')
+    @json_processor = ProcessJson.new('./data/people.json')
+    load_people_from_file
   end
 
   def add_person
@@ -33,11 +34,12 @@ class People
     print "Has parents' permission [Yy/Nn]: "
     yesorno = validate_input_boolean("Parents' permission [Yy/Nn]")
     @people.push Student.new(
-      age: age,
-      classroom: classroom,
-      name: name.capitalize,
-      parent_permission: %w[Y y].include?(yesorno)
-    )
+                   id: Random.rand(1..10_000),
+                   age: age,
+                   classroom: classroom,
+                   name: name.capitalize,
+                   parent_permission: %w[Y y].include?(yesorno),
+                 )
     print "Student added successfully!!! \n"
   end
 
@@ -49,10 +51,11 @@ class People
     print 'Specialization: '
     specialization = validate_input_empty('Specialization: ')
     @people.push Teacher.new(
-      age: age,
-      specialization: specialization.capitalize,
-      name: name.capitalize
-    )
+                   id: Random.rand(1..10_000),
+                   age: age,
+                   specialization: specialization.capitalize,
+                   name: name.capitalize,
+                 )
     print "Teacher added successfully!!!\n"
   end
 
@@ -74,17 +77,30 @@ class People
       end
     end
   end
-  def load_people
-    if @person_file.read_json
-      @person_file.read_json.map do |person|
-        if person['classroom']
-          Student.new(person['age'], Classroom.new(person['classroom']), person['name'], person['permission'])
-        else
-          Teacher.new(person['age'], person['specialization'], person['name'])
-        end
+  def load_people_from_file
+    people_data = @json_processor.read_data_from_file
+    people_data.each do |persondata|
+      if persondata['type'] == 'student'
+        @people << Student.new(
+          id: persondata['id'],
+          age: persondata['age'],
+          name: persondata['name'],
+          parent_permission: persondata['parent_permission'],
+          classroom: persondata['classroom'],
+        )
+      else
+        @people << Teacher.new(
+          id: persondata['id'],
+          age: persondata['age'],
+          name: persondata['name'],
+          parent_permission: persondata['parent_permission'],
+          specialization: persondata['specialization'],
+        )
       end
-    else
-      []
     end
+  end
+
+  def write_file
+    @json_processor.save_data_to_json(@people)
   end
 end

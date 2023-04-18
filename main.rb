@@ -16,6 +16,7 @@ def main
     main_option = gets.chomp
     if main_option == '7'
       app.books.write_file
+      app.people.write_file
       break
     else
       app.eval_option(main_option)
@@ -23,4 +24,3 @@ def main
   end
 end
 main
-
