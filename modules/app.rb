@@ -4,6 +4,7 @@ require_relative './logic/people'
 require_relative './logic/rentals'
 
 class App
+  attr_reader :books, :people, :rentals
   include Validator
   def initialize()
     @books = Books.new

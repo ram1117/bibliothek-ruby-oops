@@ -1,11 +1,18 @@
 require_relative '../book'
 require_relative '../validator'
+require_relative '../processjson'
+
 class Books
   include Validator
   attr_accessor :books
 
   def initialize
+    @json_processor = ProcessJson.new('books.json')
+    books_data = @json_processor.read_data_from_file
     @books = []
+    books_data.each do |bookdata|
+      @books << Book.new(bookdata['title'], bookdata['author'])
+    end
   end
 
   def add_book
@@ -25,5 +32,9 @@ class Books
         print "[#{index}] Title: #{book.title}, Author: #{book.author} \n"
       end
     end
+  end
+
+  def write_file
+    @json_processor.save_data_to_json(@books)
   end
 end

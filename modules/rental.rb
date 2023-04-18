@@ -1,3 +1,4 @@
+require 'json'
 class Rental
   attr_accessor :date, :person, :book
 

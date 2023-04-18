@@ -1,3 +1,4 @@
+require 'json'
 class Book
   attr_accessor :title, :author, :rentals
 
@@ -9,5 +10,10 @@ class Book
 
   def add_rental(rental)
     @rentals.push(rental)
+  end
+
+  def to_json
+    book_hash = Hash[title: @title, author: @author]
+    JSON.generate(book_hash)
   end
 end

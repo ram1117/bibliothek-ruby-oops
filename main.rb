@@ -15,9 +15,12 @@ def main
   while main_menu
     print main_menu
     main_option = gets.chomp
-    break if main_option == '7'
-
-    app.eval_option(main_option)
+    if main_option == '7'
+      app.books.write_file
+      break
+    else
+      app.eval_option(main_option)
+    end
   end
 end
 main
