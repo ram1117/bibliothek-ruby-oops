@@ -1,12 +1,15 @@
 require_relative '../student'
 require_relative '../teacher'
 require_relative '../validator'
+require_relative '../processjson'
 class People
   include Validator
   attr_accessor :people
 
   def initialize
     @people = []
+    @json_processor = ProcessJson.new('./data/people.json')
+    load_people_from_file
   end
 
   def add_person
@@ -30,12 +33,15 @@ class People
     classroom = validate_input_empty('Classroom: ')
     print "Has parents' permission [Yy/Nn]: "
     yesorno = validate_input_boolean("Parents' permission [Yy/Nn]")
+    randomno = Random.rand(1..10_000)
     @people.push Student.new(
+      id: randomno,
       age: age,
       classroom: classroom,
       name: name.capitalize,
       parent_permission: %w[Y y].include?(yesorno)
     )
+    @people.each(&:id)
     print "Student added successfully!!! \n"
   end
 
@@ -46,7 +52,9 @@ class People
     age = validate_input_int('Age: ')
     print 'Specialization: '
     specialization = validate_input_empty('Specialization: ')
+    randomno = Random.rand(1..10_000)
     @people.push Teacher.new(
+      id: randomno,
       age: age,
       specialization: specialization.capitalize,
       name: name.capitalize
@@ -71,5 +79,32 @@ class People
         print str1 + str2
       end
     end
+  end
+
+  def load_people_from_file
+    people_data = @json_processor.read_data_from_file
+    people_data.each do |persondata|
+      @people << if persondata['type'] == 'student'
+                   Student.new(
+                     id: persondata['id'],
+                     age: persondata['age'],
+                     name: persondata['name'],
+                     parent_permission: persondata['parent_permission'],
+                     classroom: persondata['classroom']
+                   )
+                 else
+                   Teacher.new(
+                     id: persondata['id'],
+                     age: persondata['age'],
+                     name: persondata['name'],
+                     parent_permission: persondata['parent_permission'],
+                     specialization: persondata['specialization']
+                   )
+                 end
+    end
+  end
+
+  def write_file
+    @json_processor.save_data_to_json(@people)
   end
 end

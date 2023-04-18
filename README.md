@@ -49,6 +49,7 @@
 
 - **[Library record keeping]**
 - **[Minimalistic UI to access the system]**
+- **[Persist data in JSON files]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -109,10 +110,15 @@ To run the project, execute the following command:
 ## 👥 Authors <a name="authors"></a>
 
 
-👤 **Author1**
+👤 **Ram Kumar Karuppusamy**
 
 - GitHub: [@ram1117](https://github.com/ram1117)
 - LinkedIn: [Ram Kumar Karuppusamy](https://www.linkedin.com/in/ram-kumar-karuppusamy/)
+
+👤 **Malik Ghulam Subbhani**
+
+- GitHub: [@gsmalik030](https://github.com/gsmalik030)
+- LinkedIn: [Malik Ghulam Subbhani](https://www.linkedin.com/in/gsmalik030/)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
