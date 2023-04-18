@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 require_relative './modules/app'
-
 def main
   main_menu =
     "\nPlease choose an option:
@@ -24,3 +23,4 @@ def main
   end
 end
 main
+

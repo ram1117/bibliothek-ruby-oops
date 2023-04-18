@@ -1,12 +1,14 @@
 require_relative '../student'
 require_relative '../teacher'
 require_relative '../validator'
+require_relative '../process_json'
 class People
   include Validator
   attr_accessor :people
 
   def initialize
     @people = []
+    @person_file = ProccessJsonFile.new('person.json')
   end
 
   def add_person
@@ -70,6 +72,19 @@ class People
         end
         print str1 + str2
       end
+    end
+  end
+  def load_people
+    if @person_file.read_json
+      @person_file.read_json.map do |person|
+        if person['classroom']
+          Student.new(person['age'], Classroom.new(person['classroom']), person['name'], person['permission'])
+        else
+          Teacher.new(person['age'], person['specialization'], person['name'])
+        end
+      end
+    else
+      []
     end
   end
 end
