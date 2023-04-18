@@ -1,11 +1,15 @@
 require_relative '../rental'
 require_relative '../validator'
+require_relative '../processjson'
+
 class Rentals
   include Validator
   attr_accessor :rentals
 
-  def initialize
+  def initialize(books, people)
     @rentals = []
+    @json_processor = ProcessJson.new('./data/rentals.json')
+    load_rental_from_file(books, people)
   end
 
   def add_rental(books, people)
@@ -48,5 +52,18 @@ class Rentals
         print "Date: #{rental.date}, Book: #{rental.book.title}, Author: #{rental.book.author}\n"
       end
     end
+  end
+
+  def load_rental_from_file(books, people)
+    rental_data = @json_processor.read_data_from_file
+    rental_data.each do |rent|
+      book = books.select { |book| book.title == rent['booktitle'] }
+      person = people.select { |person| person.id == rent['personid'] }
+      @rentals << Rental.new(rent['date'], person.first, book.first)
+    end
+  end
+
+  def write_file
+    @json_processor.save_data_to_json(@rentals)
   end
 end

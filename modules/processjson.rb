@@ -5,12 +5,14 @@ class ProcessJson
     @file_location = file_location
   end
   def save_data_to_json(data)
-    file = File.new(@file_location, 'w')
-    data.each do |obj|
-      file.write(obj.to_json)
-      file.write("\n")
+    unless data.empty?
+      file = File.new(@file_location, 'w')
+      data.each do |obj|
+        file.write(obj.to_json)
+        file.write("\n")
+      end
+      file.close
     end
-    file.close
   end
 
   def read_data_from_file

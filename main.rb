@@ -11,12 +11,14 @@ def main
     6.List all rentals for a given Person ID
     7.Exit\n"
   app = App.new
+  Dir.mkdir('data') unless Dir.exist?('data')
   while main_menu
     print main_menu
     main_option = gets.chomp
     if main_option == '7'
       app.books.write_file
       app.people.write_file
+      app.rentals.write_file
       break
     else
       app.eval_option(main_option)

@@ -1,3 +1,1 @@
-{"type":"student","age":11,"name":"Mary","parent_permission":true,"class":null,"id":null}
-{"type":"teacher","age":35,"name":"Martin","parent_permission":true,"specialization":"Math","id":null}
-{"type":"student","age":14,"name":"Bobby","parent_permission":false,"class":null,"id":null}
+{"type":"student","age":11,"name":"Dd","parent_permission":true,"classroom":"gg","id":7556}

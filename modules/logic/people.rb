@@ -33,13 +33,15 @@ class People
     classroom = validate_input_empty('Classroom: ')
     print "Has parents' permission [Yy/Nn]: "
     yesorno = validate_input_boolean("Parents' permission [Yy/Nn]")
+    randomno = Random.rand(1..10_000)
     @people.push Student.new(
-                   id: Random.rand(1..10_000),
+                   id: randomno,
                    age: age,
                    classroom: classroom,
                    name: name.capitalize,
                    parent_permission: %w[Y y].include?(yesorno),
                  )
+    @people.each { |p| p.id }
     print "Student added successfully!!! \n"
   end
 
@@ -50,8 +52,9 @@ class People
     age = validate_input_int('Age: ')
     print 'Specialization: '
     specialization = validate_input_empty('Specialization: ')
+    randomno = Random.rand(1..10_000)
     @people.push Teacher.new(
-                   id: Random.rand(1..10_000),
+                   id: randomno,
                    age: age,
                    specialization: specialization.capitalize,
                    name: name.capitalize,

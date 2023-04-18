@@ -9,7 +9,7 @@ class App
   def initialize()
     @books = Books.new
     @people = People.new
-    @rentals = Rentals.new
+    @rentals = Rentals.new(@books.books, @people.people)
   end
 
   def eval_option(option)

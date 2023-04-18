@@ -25,7 +25,7 @@ class Student < Person
         age: @age,
         name: @name,
         parent_permission: @parent_permission,
-        class: @class,
+        classroom: @classroom,
         id: @id
       ]
     JSON.generate(student_hash)
