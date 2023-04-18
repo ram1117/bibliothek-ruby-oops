@@ -35,13 +35,13 @@ class People
     yesorno = validate_input_boolean("Parents' permission [Yy/Nn]")
     randomno = Random.rand(1..10_000)
     @people.push Student.new(
-                   id: randomno,
-                   age: age,
-                   classroom: classroom,
-                   name: name.capitalize,
-                   parent_permission: %w[Y y].include?(yesorno),
-                 )
-    @people.each { |p| p.id }
+      id: randomno,
+      age: age,
+      classroom: classroom,
+      name: name.capitalize,
+      parent_permission: %w[Y y].include?(yesorno)
+    )
+    @people.each(&:id)
     print "Student added successfully!!! \n"
   end
 
@@ -54,11 +54,11 @@ class People
     specialization = validate_input_empty('Specialization: ')
     randomno = Random.rand(1..10_000)
     @people.push Teacher.new(
-                   id: randomno,
-                   age: age,
-                   specialization: specialization.capitalize,
-                   name: name.capitalize,
-                 )
+      id: randomno,
+      age: age,
+      specialization: specialization.capitalize,
+      name: name.capitalize
+    )
     print "Teacher added successfully!!!\n"
   end
 
@@ -80,26 +80,27 @@ class People
       end
     end
   end
+
   def load_people_from_file
     people_data = @json_processor.read_data_from_file
     people_data.each do |persondata|
-      if persondata['type'] == 'student'
-        @people << Student.new(
-          id: persondata['id'],
-          age: persondata['age'],
-          name: persondata['name'],
-          parent_permission: persondata['parent_permission'],
-          classroom: persondata['classroom'],
-        )
-      else
-        @people << Teacher.new(
-          id: persondata['id'],
-          age: persondata['age'],
-          name: persondata['name'],
-          parent_permission: persondata['parent_permission'],
-          specialization: persondata['specialization'],
-        )
-      end
+      @people << if persondata['type'] == 'student'
+                   Student.new(
+                     id: persondata['id'],
+                     age: persondata['age'],
+                     name: persondata['name'],
+                     parent_permission: persondata['parent_permission'],
+                     classroom: persondata['classroom']
+                   )
+                 else
+                   Teacher.new(
+                     id: persondata['id'],
+                     age: persondata['age'],
+                     name: persondata['name'],
+                     parent_permission: persondata['parent_permission'],
+                     specialization: persondata['specialization']
+                   )
+                 end
     end
   end
 

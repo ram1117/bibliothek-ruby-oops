@@ -5,11 +5,12 @@ require_relative './logic/rentals'
 
 class App
   attr_reader :books, :people, :rentals
+
   include Validator
   def initialize()
     @books = Books.new
     @people = People.new
-    @rentals = Rentals.new(@books.books, @people.people)
+    @rentals = Rentals.new(@books, @people)
   end
 
   def eval_option(option)
@@ -23,9 +24,9 @@ class App
     when '4'
       @books.add_book
     when '5'
-      @rentals.add_rental(@books, @people)
+      @rentals.add_rental
     when '6'
-      @rentals.list_rental(@people.people)
+      @rentals.list_rental
     else
       print "Please enter a valid option: \n\n"
     end

@@ -10,9 +10,9 @@ class Rental
     book.rentals << self
   end
 
-  def to_json
+  def to_json(*_args)
     rental_hash =
-      Hash[date: @date, personid: @person.id, booktitle: @book.title]
+      { date: @date, personid: @person.id, booktitle: @book.title }
     JSON.generate(rental_hash)
   end
 end

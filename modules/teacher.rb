@@ -19,16 +19,14 @@ class Teacher < Person
     true
   end
 
-  def to_json
+  def to_json(*_args)
     teacher_hash =
-      Hash[
-        type: 'teacher',
+      { type: 'teacher',
         age: @age,
         name: @name,
         parent_permission: @parent_permission,
         specialization: @specialization,
-        id: @id
-      ]
+        id: @id }
     JSON.generate(teacher_hash)
   end
 end

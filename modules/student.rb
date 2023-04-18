@@ -18,16 +18,14 @@ class Student < Person
     classroom.students << self unless classroom.students.include?(self)
   end
 
-  def to_json
+  def to_json(*_args)
     student_hash =
-      Hash[
-        type: 'student',
+      { type: 'student',
         age: @age,
         name: @name,
         parent_permission: @parent_permission,
         classroom: @classroom,
-        id: @id
-      ]
+        id: @id }
     JSON.generate(student_hash)
   end
 end

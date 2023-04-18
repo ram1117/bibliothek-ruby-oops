@@ -12,8 +12,8 @@ class Book
     @rentals.push(rental)
   end
 
-  def to_json
-    book_hash = Hash[title: @title, author: @author]
+  def to_json(*_args)
+    book_hash = { title: @title, author: @author }
     JSON.generate(book_hash)
   end
 end
