@@ -1,19 +1,18 @@
-require_relative '../modules/classroom.rb'
+require_relative '../modules/classroom'
 
 describe Classroom do
-    
-    before (:each) do
-        @classroom = Classroom.new('Ruby class')
-        @student = double('student')
-        allow(@student).to receive(:classroom)
-    end
+  before(:each) do
+    @classroom = Classroom.new('Ruby class')
+    @student = double('student')
+    allow(@student).to receive(:classroom=) { nil }
+  end
 
-    it 'instance of Classroom' do
-        expect(@classroom).to be_instance_of(Classroom)
-    end
+  it 'instance of Classroom' do
+    expect(@classroom).to be_instance_of(Classroom)
+  end
 
-    it '#add_students' do
+  it '#add_students' do
     @classroom.add_students(@student)
-    expect(@clasroom.students.length).to be 1
-    end
+    expect(@classroom.students.length).to be 1
+  end
 end

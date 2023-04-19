@@ -5,7 +5,7 @@ describe Nameable do
     nameobj = Nameable.new
     expect { nameobj.correct_name }.to raise_error(
       NotImplementedError,
-      'method not defined',
+      'method not defined'
     )
   end
 end
