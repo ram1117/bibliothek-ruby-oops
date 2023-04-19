@@ -19,13 +19,14 @@ class Student < Person
   end
 
   def to_json(*_args)
-    student_hash =
-      { type: 'student',
-        age: @age,
-        name: @name,
-        parent_permission: @parent_permission,
-        classroom: @classroom,
-        id: @id }
+    student_hash = {
+      type: 'student',
+      age: @age,
+      name: @name,
+      parent_permission: @parent_permission,
+      classroom: @classroom,
+      id: @id
+    }
     JSON.generate(student_hash)
   end
 end

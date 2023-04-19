@@ -22,6 +22,7 @@
   - [Prerequisites](#prerequisites)
   - [Install](#install)
   - [Usage](#usage)
+  - [Testing](#testing)
 - [👥 Authors](#authors)
 - [🔭 Future Features](#future-features)
 - [🤝 Contributing](#contributing)
@@ -102,6 +103,16 @@ To run the project, execute the following command:
 ```sh
   ruby main.rb
 ```
+
+### Testing
+
+To run test cases, execute the following command:
+
+```sh
+  rspec spec
+```
+
+you can add your test cases in /spec directory.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
