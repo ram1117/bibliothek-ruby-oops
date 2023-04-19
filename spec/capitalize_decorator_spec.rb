@@ -16,7 +16,6 @@ describe CapitalizeDecorator do
   end
   it 'correct_name method should return a capitalized string' do
     cd = CapitalizeDecorator.new(@nameable_obj)
-    puts cd.correct_name
     expect(cd.correct_name).to eql 'Martin luther'
   end
 end
